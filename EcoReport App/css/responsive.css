@@ -1,0 +1,411 @@
+/* 
+ * EcoReport - Responsive Stylesheet
+ * A community-driven environmental reporting app for Nigeria
+ */
+
+/* ===== MEDIA QUERIES ===== */
+
+/* Large Desktops (1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        padding: 0 var(--spacing-lg);
+    }
+}
+
+/* Medium Desktops (992px to 1199px) */
+@media (max-width: 1199px) {
+    .footer-content {
+        grid-template-columns: 1fr 2fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .newsletter {
+        grid-column: span 2;
+        margin-top: var(--spacing-lg);
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablets and Small Desktops (768px to 991px) */
+@media (max-width: 991px) {
+    html {
+        font-size: 15px;
+    }
+    
+    .main-header .container {
+        flex-wrap: wrap;
+    }
+    
+    .main-nav {
+        order: 3;
+        width: 100%;
+        margin-top: var(--spacing-md);
+    }
+    
+    .nav-links {
+        justify-content: center;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .map-container {
+        flex-direction: column;
+    }
+    
+    .issues-map {
+        height: 400px;
+    }
+    
+    .map-filters {
+        width: 100%;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: var(--spacing-lg);
+    }
+    
+    .newsletter {
+        grid-column: span 1;
+    }
+}
+
+/* Mobile Landscape (576px to 767px) */
+@media (max-width: 767px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .main-header .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--background-light);
+        flex-direction: column;
+        padding: var(--spacing-md);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform var(--transition-normal), opacity var(--transition-normal);
+        z-index: 99;
+    }
+    
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .nav-links li {
+        width: 100%;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: var(--spacing-sm) 0;
+    }
+    
+    .hero {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .feature-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .report-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .location-input {
+        flex-direction: column;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
+        width: 100%;
+    }
+    
+    .dashboard-filters {
+        flex-direction: column;
+    }
+    
+    .community-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: var(--spacing-sm);
+    }
+    
+    .events-header,
+    .petitions-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .events-container,
+    .petitions-container,
+    .resources-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .modal-content {
+        width: 95%;
+    }
+    
+    .social-buttons {
+        flex-direction: column;
+    }
+}
+
+/* Mobile Portrait (up to 575px) */
+@media (max-width: 575px) {
+    .main-header {
+        padding: var(--spacing-sm) 0;
+    }
+    
+    .logo img {
+        height: 30px;
+    }
+    
+    .auth-buttons {
+        gap: var(--spacing-sm);
+    }
+    
+    .auth-buttons button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .report-form {
+        padding: var(--spacing-md);
+    }
+    
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+    
+    .link-group {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .toast {
+        min-width: auto;
+        max-width: 90%;
+    }
+}
+
+/* Height-based Media Queries */
+@media (max-height: 600px) {
+    .hero {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .modal-content {
+        max-height: 95vh;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .main-header,
+    .main-nav,
+    .auth-buttons,
+    .cta-buttons,
+    .form-actions,
+    .main-footer,
+    .modal,
+    .toast-container,
+    .loading-spinner,
+    .offline-notification {
+        display: none !important;
+    }
+    
+    body {
+        background-color: white;
+        color: black;
+    }
+    
+    main {
+        padding: 0;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .page {
+        display: block !important;
+        page-break-after: always;
+    }
+    
+    .dashboard-card,
+    .report-card,
+    .event-card,
+    .petition-card,
+    .resource-card {
+        break-inside: avoid;
+    }
+    
+    .chart-container {
+        height: auto;
+        page-break-inside: avoid;
+    }
+    
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+    
+    a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-light: #1e1e1e;
+        --background-off: #2d2d2d;
+        --text-primary: #e0e0e0;
+        --text-secondary: #b0b0b0;
+        --border-color: #444444;
+    }
+    
+    .btn-outline {
+        color: var(--primary-color);
+    }
+    
+    .btn-social {
+        background-color: #2d2d2d;
+        border-color: #444444;
+        color: var(--text-primary);
+    }
+    
+    .modal,
+    .loading-spinner {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    .modal-content,
+    .toast {
+        background-color: #2d2d2d;
+    }
+    
+    input, select, textarea {
+        background-color: #333333;
+        color: var(--text-primary);
+        border-color: #444444;
+    }
+    
+    input::placeholder, 
+    textarea::placeholder {
+        color: #888888;
+    }
+    
+    .file-upload-label {
+        border-color: #444444;
+    }
+    
+    .loading-spinner {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+    :root {
+        --primary-color: CanvasText;
+        --primary-dark: CanvasText;
+        --primary-light: Canvas;
+        --secondary-color: CanvasText;
+        --secondary-dark: CanvasText;
+        --secondary-light: Canvas;
+        --text-primary: CanvasText;
+        --text-secondary: CanvasText;
+        --background-light: Canvas;
+        --background-off: Canvas;
+        --border-color: CanvasText;
+    }
+    
+    .btn,
+    .nav-links a.active::after,
+    .tab-btn.active::after,
+    .status-indicator,
+    .legend-color {
+        border: 1px solid CanvasText;
+    }
+    
+    .modal,
+    .toast,
+    .loading-spinner {
+        border: 2px solid CanvasText;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}

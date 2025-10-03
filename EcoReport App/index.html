@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>EcoReport - Community Environmental Reporting</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/icons/favicon.png" type="image/x-icon">
+
+    <!-- Leaflet CSS for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS support -->
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#4CAF50">
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="EcoReport - A community-driven environmental reporting app for Nigeria">
+<meta name="theme-color" content="#4CAF50">
+
+
+<body>
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo2.png" alt="EcoReport Logo" style="width: 150px; height: auto;">
+
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#" class="active" data-page="home">Home</a></li>
+                    <li><a href="#" data-page="report">Report Issue</a></li>
+                    <li><a href="#" data-page="map">View Map</a></li>
+                    <li><a href="#" data-page="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-page="community">Community</a></li>
+                    <li><a href="#" data-page="education">Education</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn" class="btn btn-outline">Login</button>
+                <button id="signupBtn" class="btn btn-primary">Sign Up</button>
+                <div class="user-profile hidden">
+                    <img src="images/logo.jpg" alt="User Profile" id="userAvatar">
+                    <div class="dropdown-menu">
+                        <a href="#" data-page="profile">My Profile</a>
+                        <a href="#" data-page="my-reports">My Reports</a>
+                        <a href="#" id="logoutBtn">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Home Page Section -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="container">
+                    <h2>Empowering Communities for a Cleaner Nigeria</h2>
+                    <p>Report environmental issues, track progress, and collaborate with your community to create
+                        sustainable change.</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary btn-large" id="reportIssueBtn">Report an Issue</button>
+                        <button class="btn btn-secondary btn-large" id="viewMapBtn">View Reports Map</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features container">
+                <h3>How EcoReport Works</h3>
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="icon"
+                            style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0; margin: 0 auto 15px auto;">
+                            <img src="images/report_issue.png" alt="Report Icon"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h4>Report Issues</h4>
+                        <p>Document environmental problems like waste dumping, pollution, flooding, or deforestation.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon"
+                            style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0; margin: 0 auto 15px auto;">
+                            <img src="images/track-hotspot.png" alt="Map Icon"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h4>Track Hotspots</h4>
+                        <p>View a real-time map of environmental issues in your area and across Nigeria.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon"
+                            style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0; margin: 0 auto 15px auto;">
+                            <img src="images/take_action.png" alt="Community Icon"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h4>Take Action</h4>
+                        <p>Join cleanup events, sign petitions, and collaborate with your community.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon"
+                            style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0; margin: 0 auto 15px auto;">
+                            <img src="images/Drive_Change.png" alt="Data Icon"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h4>Drive Change</h4>
+                        <p>Help create data-driven insights to influence environmental policies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="impact-stats">
+                <div class="container">
+                    <h3>Our Impact So Far</h3>
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-number" id="reportCount">0</div>
+                            <div class="stat-label">Issues Reported</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="resolvedCount">0</div>
+                            <div class="stat-label">Problems Resolved</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="communityCount">0</div>
+                            <div class="stat-label">Community Members</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="eventCount">0</div>
+                            <div class="stat-label">Cleanup Events</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-reports container">
+                <h3>Recent Reports</h3>
+                <div class="report-cards" id="recentReportsContainer">
+                    <!-- Reports will be dynamically inserted here -->
+                </div>
+                <div class="view-more">
+                    <button class="btn btn-outline" id="viewMoreReportsBtn">View More Reports</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report Issue Section -->
+        <section id="report" class="page">
+            <div class="container">
+                <h2>Report an Environmental Issue</h2>
+                <p class="section-intro">Help improve our environment by reporting issues in your community. Your
+                    reports create awareness and drive action.</p>
+
+                <form id="reportForm" class="report-form">
+                    <div class="form-group">
+                        <label for="issueType">Issue Type</label>
+                        <select id="issueType" required>
+                            <option value="" disabled selected>Select issue type</option>
+                            <option value="waste">Illegal Waste Dumping</option>
+                            <option value="pollution">Air/Water Pollution</option>
+                            <option value="deforestation">Deforestation</option>
+                            <option value="flooding">Flooding</option>
+                            <option value="erosion">Erosion</option>
+                            <option value="oilSpill">Oil Spill</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issueTitle">Title</label>
+                        <input type="text" id="issueTitle" placeholder="Brief description of the issue" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issueDescription">Detailed Description</label>
+                        <textarea id="issueDescription" placeholder="Provide more details about the environmental issue"
+                            rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issueLocation">Location</label>
+                        <div class="location-input">
+                            <input type="text" id="issueLocation" placeholder="Enter location or use current location">
+                            <button type="button" id="useLocationBtn" class="btn btn-outline">
+                                <img src="images/location-icon.svg" alt="Location">
+                                Use My Location
+                            </button>
+                        </div>
+                        <div id="locationMap" class="location-map"></div>
+                        <input type="hidden" id="latitude">
+                        <input type="hidden" id="longitude">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issueSeverity">Severity</label>
+                        <div class="severity-slider">
+                            <input type="range" id="issueSeverity" min="1" max="5" value="3">
+                            <div class="severity-labels">
+                                <span>Minor</span>
+                                <span>Moderate</span>
+                                <span>Severe</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issuePhotos">Upload Photos</label>
+                        <div class="file-upload">
+                            <input type="file" id="issuePhotos" accept="image/*" multiple>
+                            <label for="issuePhotos" class="file-upload-label">
+                                <img src="images/upload-icon.svg" alt="Upload">
+                                <span>Choose files or drag & drop</span>
+                            </label>
+                        </div>
+                        <div id="photoPreview" class="photo-preview"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancelReportBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Report</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Map View Section -->
+        <section id="map" class="page">
+            <div class="map-container">
+                <div id="issuesMap" class="issues-map"></div>
+                <div class="map-filters">
+                    <h3>Filters</h3>
+                    <div class="filter-group">
+                        <label>Issue Type</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" value="waste" checked> Waste Dumping</label>
+                            <label><input type="checkbox" value="pollution" checked> Pollution</label>
+                            <label><input type="checkbox" value="deforestation" checked> Deforestation</label>
+                            <label><input type="checkbox" value="flooding" checked> Flooding</label>
+                            <label><input type="checkbox" value="erosion" checked> Erosion</label>
+                            <label><input type="checkbox" value="oilSpill" checked> Oil Spill</label>
+                            <label><input type="checkbox" value="other" checked> Other</label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" value="reported" checked> Reported</label>
+                            <label><input type="checkbox" value="inProgress" checked> In Progress</label>
+                            <label><input type="checkbox" value="resolved" checked> Resolved</label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date Range</label>
+                        <div class="date-range">
+                            <input type="date" id="startDate">
+                            <span>to</span>
+                            <input type="date" id="endDate">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>Severity</label>
+                        <div class="range-slider">
+                            <input type="range" id="minSeverity" min="1" max="5" value="1">
+                            <input type="range" id="maxSeverity" min="1" max="5" value="5">
+                            <div class="range-values">
+                                <span id="minSeverityValue">1</span>
+                                <span>to</span>
+                                <span id="maxSeverityValue">5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="applyFiltersBtn" class="btn btn-primary">Apply Filters</button>
+                    <button id="resetFiltersBtn" class="btn btn-outline">Reset</button>
+                </div>
+            </div>
+            <div class="container">
+                <div class="map-legend">
+                    <h4>Map Legend</h4>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <span class="legend-color waste"></span>
+                            <span>Waste Dumping</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color pollution"></span>
+                            <span>Pollution</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color deforestation"></span>
+                            <span>Deforestation</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color flooding"></span>
+                            <span>Flooding</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color erosion"></span>
+                            <span>Erosion</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color oilSpill"></span>
+                            <span>Oil Spill</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color other"></span>
+                            <span>Other</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="page">
+            <div class="container">
+                <h2>Environmental Data Dashboard</h2>
+                <p class="section-intro">Track environmental trends and see the impact of community reporting.</p>
+
+                <div class="dashboard-filters">
+                    <div class="filter-item">
+                        <label for="dashboardRegion">Region</label>
+                        <select id="dashboardRegion">
+                            <option value="all">All Nigeria</option>
+                            <option value="north">Northern Nigeria</option>
+                            <option value="south">Southern Nigeria</option>
+                            <option value="lagos">Lagos</option>
+                            <option value="abuja">Abuja</option>
+                            <option value="portHarcourt">Port Harcourt</option>
+                            <option value="kano">Kano</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="dashboardTimeframe">Timeframe</label>
+                        <select id="dashboardTimeframe">
+                            <option value="week">Past Week</option>
+                            <option value="month" selected>Past Month</option>
+                            <option value="quarter">Past 3 Months</option>
+                            <option value="year">Past Year</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    <button id="updateDashboardBtn" class="btn btn-primary">Update</button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4>Issues by Type</h4>
+                        <div class="chart-container">
+                            <canvas id="issueTypeChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Issues by Status</h4>
+                        <div class="chart-container">
+                            <canvas id="issueStatusChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Issues Over Time</h4>
+                        <div class="chart-container">
+                            <canvas id="issueTimeChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Top Affected Areas</h4>
+                        <div class="chart-container">
+                            <canvas id="areaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-insights">
+                    <h3>Key Insights</h3>
+                    <div class="insights-container" id="dashboardInsights">
+                        <!-- Insights will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <div class="export-options">
+                    <h4>Export Data</h4>
+                    <div class="export-buttons">
+                        <button class="btn btn-outline" id="exportCsvBtn">Export as CSV</button>
+                        <button class="btn btn-outline" id="exportPdfBtn">Export as PDF</button>
+                        <button class="btn btn-outline" id="exportImageBtn">Export Charts</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community" class="page">
+            <div class="container">
+                <h2>Community Action</h2>
+                <p class="section-intro">Join forces with others to create positive environmental change in your
+                    community.</p>
+
+                <div class="community-tabs">
+                    <button class="tab-btn active" data-tab="events">Cleanup Events</button>
+                    <button class="tab-btn" data-tab="petitions">Petitions</button>
+                    <button class="tab-btn" data-tab="volunteers">Volunteer</button>
+                </div>
+
+                <div class="tab-content">
+                    <div id="events" class="tab-pane active">
+                        <div class="events-header">
+                            <h3>Upcoming Cleanup Events</h3>
+                            <button class="btn btn-primary" id="createEventBtn">Create Event</button>
+                        </div>
+
+                        <div class="events-container" id="eventsContainer">
+                            <!-- Events will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="petitions" class="tab-pane">
+                        <div class="petitions-header">
+                            <h3>Active Petitions</h3>
+                            <button class="btn btn-primary" id="createPetitionBtn">Start Petition</button>
+                        </div>
+
+                        <div class="petitions-container" id="petitionsContainer">
+                            <!-- Petitions will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="volunteers" class="tab-pane">
+                        <h3>Volunteer Opportunities</h3>
+                        <p>Register as a volunteer to help with environmental cleanup and awareness activities.</p>
+
+                        <form id="volunteerForm" class="volunteer-form">
+                            <div class="form-group">
+                                <label for="volunteerName">Full Name</label>
+                                <input type="text" id="volunteerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerEmail">Email</label>
+                                <input type="email" id="volunteerEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerPhone">Phone Number</label>
+                                <input type="tel" id="volunteerPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerLocation">Location</label>
+                                <input type="text" id="volunteerLocation" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Areas of Interest</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" value="cleanup"> Cleanup Activities</label>
+                                    <label><input type="checkbox" value="education"> Environmental Education</label>
+                                    <label><input type="checkbox" value="advocacy"> Advocacy & Awareness</label>
+                                    <label><input type="checkbox" value="monitoring"> Environmental Monitoring</label>
+                                    <label><input type="checkbox" value="treePlanting"> Tree Planting</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerAvailability">Availability</label>
+                                <select id="volunteerAvailability" required>
+                                    <option value="" disabled selected>Select your availability</option>
+                                    <option value="weekends">Weekends Only</option>
+                                    <option value="weekdays">Weekdays Only</option>
+                                    <option value="evenings">Evenings Only</option>
+                                    <option value="anytime">Anytime</option>
+                                    <option value="custom">Custom Schedule</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerMessage">Why do you want to volunteer?</label>
+                                <textarea id="volunteerMessage" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register as Volunteer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="page">
+            <div class="container">
+                <h2>Environmental Education</h2>
+                <p class="section-intro">Learn about environmental issues affecting Nigeria and how you can help.</p>
+
+                <div class="weather-alerts">
+                    <h3>Weather & Environmental Alerts</h3>
+                    <div id="alertsContainer" class="alerts-container">
+                        <!-- Alerts will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <div class="education-resources">
+                    <h3>Educational Resources</h3>
+                    <div class="resource-categories">
+                        <button class="category-btn active" data-category="all">All</button>
+                        <button class="category-btn" data-category="waste">Waste Management</button>
+                        <button class="category-btn" data-category="water">Water Conservation</button>
+                        <button class="category-btn" data-category="climate">Climate Change</button>
+                        <button class="category-btn" data-category="biodiversity">Biodiversity</button>
+                        <button class="category-btn" data-category="pollution">Pollution</button>
+                    </div>
+
+                    <div class="resources-container" id="resourcesContainer">
+                        <!-- Resources will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <div class="eco-tips">
+                    <h3>Eco-Friendly Tips</h3>
+                    <div class="tips-carousel" id="tipsCarousel">
+                        <!-- Tips will be dynamically inserted here -->
+                    </div>
+                    <div class="carousel-controls">
+                        <button id="prevTipBtn" class="carousel-control">
+                            <img src="images/arrow-left.svg" alt="Previous">
+                        </button>
+                        <div class="carousel-indicators" id="carouselIndicators">
+                            <!-- Indicators will be dynamically inserted here -->
+                        </div>
+                        <button id="nextTipBtn" class="carousel-control">
+                            <img src="images/arrow-right.svg" alt="Next">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/ecoreport-logo.png" alt="EcoReport Logo">
+                    <h2>EcoReport</h2>
+                    <p>Empowering communities for a cleaner Nigeria</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="#" data-page="home">Home</a></li>
+                            <li><a href="#" data-page="report">Report Issue</a></li>
+                            <li><a href="#" data-page="map">View Map</a></li>
+                            <li><a href="#" data-page="dashboard">Dashboard</a></li>
+                            <li><a href="#" data-page="community">Community</a></li>
+                            <li><a href="#" data-page="education">Education</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#" data-page="about">About Us</a></li>
+                            <li><a href="#" data-page="faq">FAQ</a></li>
+                            <li><a href="#" data-page="contact">Contact Us</a></li>
+                            <li><a href="#" data-page="privacy">Privacy Policy</a></li>
+                            <li><a href="#" data-page="terms">Terms of Use</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>Connect</h4>
+                        <ul class="social-links">
+                            <li><a href="#" target="_blank"><img src="images/facebook-icon.svg"
+                                        alt="Facebook">Facebook</a></li>
+                            <li><a href="#" target="_blank"><img src="images/twitter-icon.svg" alt="Twitter">Twitter</a>
+                            </li>
+                            <li><a href="#" target="_blank"><img src="images/instagram-icon.svg"
+                                        alt="Instagram">Instagram</a></li>
+                            <li><a href="#" target="_blank"><img src="images/linkedin-icon.svg"
+                                        alt="LinkedIn">LinkedIn</a></li>
+                            <li><a href="#" target="_blank"><img src="images/youtube-icon.svg" alt="YouTube">YouTube</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to our newsletter for updates on environmental issues and community actions.</p>
+                    <form id="newsletterForm">
+                        <div class="form-group">
+                            <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EcoReport. All rights reserved.</p>
+                <p>Made with ❤️ for a cleaner Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Components -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login to EcoReport</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <div class="social-login">
+                    <p>Or login with</p>
+                    <div class="social-buttons">
+                        <button class="btn btn-social btn-google">
+                            <img src="images/google-icon.svg" alt="Google">
+                            Google
+                        </button>
+                        <button class="btn btn-social btn-facebook">
+                            <img src="images/facebook-icon.svg" alt="Facebook">
+                            Facebook
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#" id="switchToSignup">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create an Account</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" required>
+                        <div class="password-strength">
+                            <div class="strength-meter"></div>
+                            <span class="strength-text">Password strength</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupConfirmPassword">Confirm Password</label>
+                        <input type="password" id="signupConfirmPassword" required>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="termsAgree" required>
+                        <label for="termsAgree">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
+                                Policy</a></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                </form>
+                <div class="social-login">
+                    <p>Or sign up with</p>
+                    <div class="social-buttons">
+                        <button class="btn btn-social btn-google">
+                            <img src="images/google-icon.svg" alt="Google">
+                            Google
+                        </button>
+                        <button class="btn btn-social btn-facebook">
+                            <img src="images/facebook-icon.svg" alt="Facebook">
+                            Facebook
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="reportDetailModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="reportDetailTitle">Report Details</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="reportDetailContent">
+                <!-- Report details will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer">
+        <!-- Toast notifications will be dynamically inserted here -->
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Offline Notification -->
+    <div class="offline-notification" id="offlineNotification">
+        <p>You are currently offline. Some features may be unavailable.</p>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Leaflet JS for maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/community.js"></script>
+    <script src="js/education.js"></script>
+    <script src="js/ui.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
+    <!-- Scripts... -->
+</body>
+
+</html>
